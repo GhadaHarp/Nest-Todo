@@ -18,14 +18,11 @@ import { JwtStrategy } from './auth/jwt.strategy';
     AuthModule,
     PassportModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET || 'SECRET',
-      signOptions: { expiresIn: '1d' },
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: process.env.JWT_SECRET_EXPIRES_IN },
     }),
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot(
-      process.env.MONGO_URI ||
-        'mongodb+srv://ghada:mbwTVGKJkm4gt37E@cluster0.akoq5.mongodb.net/',
-    ),
+    MongooseModule.forRoot(process.env.MONGO_URI!),
   ],
   controllers: [AppController],
   providers: [AppService, JwtStrategy],
